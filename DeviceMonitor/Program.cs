@@ -10,6 +10,8 @@ namespace DeviceMonitor
     internal class Program
     {
         private static int _events;
+        private static readonly EventBuffer _buffer = new EventBuffer(5000);
+
         private static void Main(string[] args)
         {
             MainAsync()
@@ -23,12 +25,12 @@ namespace DeviceMonitor
         {
             var options = new DeviceOptions
             {
-                MeasurementSecondsInterval = 0.1m
+                MeasurementSecondsInterval = 1m
             };
 
             var devices = new List<IDevice>();
 
-            for (var i = 0; i < 5000; i++)
+            for (var i = 0; i < 1; i++)
                 devices.Add(DeviceFactory.Create(options));
 
             // set event handler
@@ -36,21 +38,17 @@ namespace DeviceMonitor
                 device.TemperaturaMeasurement += Device_TemperaturaMeasurement;
 
             var starts = devices.Select(c => c.On());
-
             await Task.WhenAll(starts);
         }
 
-        private static void Device_TemperaturaMeasurement(object sender, DeviceMeasurement e)
+        private static void Device_TemperaturaMeasurement(object sender, DeviceMeasurement @event)
         {
             Interlocked.Increment(ref _events);
-            Console.WriteLine($"A temperature of {e.Temperature} has been recorded {e.Date:hh:mm:ss}" +
-                              $" for the device id : {e.DeviceId}");
+            Console.WriteLine($"A temperature of {@event.Temperature} has been recorded" +
+                              $" {@event.Date:hh:mm:ss}" +
+                              $" for the device id : {@event.DeviceId}");
 
-            //if ((_events % 10000) == 0)
-            //{
-            //    Console.WriteLine($"{_events} have been registred");
-            //    Thread.Sleep(2000);
-            //}
+            _buffer.Push(@event);
         }
     }
 }
