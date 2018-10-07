@@ -7,7 +7,7 @@ namespace DeviceEventProcessing
 {
     internal class Program
     {
-        private const string EventHubName = "temperature";
+        private const string EventHubName = "temperature1";
         private const string StorageContainerName = "checkpoints";
 
         private const string StorageAccountKey =
@@ -35,14 +35,9 @@ namespace DeviceEventProcessing
                 StorageContainerName);
 
             // Registers the Event Processor Host and starts receiving messages
-            await eventProcessorHost.RegisterEventProcessorAsync<TemperatureMeasurementProccesor>(
-                new EventProcessorOptions
-                {
-                    MaxBatchSize = 50,
-                    PrefetchCount = 300
-                });
+            await eventProcessorHost.RegisterEventProcessorAsync<TemperatureMeasurementProccesor>();
 
-            //await EventStorage.Start(90, 5);
+            await EventStorage.Start(90, 5);
 
             Console.WriteLine("Receiving. Press ENTER to stop worker.");
             Console.ReadLine();

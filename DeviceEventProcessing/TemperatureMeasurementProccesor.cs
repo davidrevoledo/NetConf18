@@ -12,8 +12,6 @@ namespace DeviceEventProcessing
 {
     public class TemperatureMeasurementProccesor : IEventProcessor
     {
-        private static readonly List<EventData> data = new List<EventData>();
-
         public Task OpenAsync(PartitionContext context)
         {
             return Task.CompletedTask;
@@ -26,6 +24,8 @@ namespace DeviceEventProcessing
 
         public async Task ProcessEventsAsync(PartitionContext context, IEnumerable<EventData> messages)
         {
+            Console.WriteLine($"events received ! partition key: {context.PartitionId}");
+
             foreach (var eventData in messages.AsParallel())
             {
                 var payload =
@@ -36,6 +36,7 @@ namespace DeviceEventProcessing
                 // todo : this is not 100% safe
                 if (!EventStorage.DeviceMeasurementToProcess.ContainsKey(measurement.DeviceId))
                     EventStorage.DeviceMeasurementToProcess.TryAdd(measurement.DeviceId, new List<DeviceMeasurement>());
+
 
                 EventStorage.DeviceMeasurementToProcess[measurement.DeviceId].Add(measurement);
             }

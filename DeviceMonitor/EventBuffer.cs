@@ -23,7 +23,7 @@ namespace DeviceMonitor
 
                 var connectionStringBuilder = new EventHubsConnectionStringBuilder(cs)
                 {
-                    EntityPath = "temperature"
+                    EntityPath = "temperature1"
                 };
 
                 return EventHubClient.CreateFromConnectionString(connectionStringBuilder.ToString());
@@ -39,20 +39,20 @@ namespace DeviceMonitor
             _eventHubClient.Value.EventHubName.ToString();
         }
 
-        public void Push(DeviceMeasurement measurement)
+        public async Task Push(DeviceMeasurement measurement)
         {
             _measurements.Add(measurement);
-            if (_measurements.Count == _bufferSize)
+            if (_measurements.Count >= _bufferSize)
                 try
                 {
-                    // todo : this solution is not safe as events can be 
+                    // todo : this solution is not safe 
                     _semaphore.Wait();
                     var newCollection = new List<DeviceMeasurement>(_measurements);
                     _measurements.Clear(); // clear the buffer
                     _semaphore.Release();
 
 
-                    Task.Run(async () => await SendMessages(newCollection));
+                    await SendMessages(newCollection);
                 }
                 finally
                 {
@@ -69,8 +69,7 @@ namespace DeviceMonitor
                         c => new EventData(Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(c))))
                     .ToList();
 
-                await _eventHubClient.Value.SendAsync(events, groupedDevice.Key.ToString());
-                await Task.Delay(10);
+                await _eventHubClient.Value.SendAsync(events); //, groupedDevice.Key.ToString());
             }
         }
     }
