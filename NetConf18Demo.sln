@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28010.2041
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IOTDemo", "IOTDemo\IOTDemo.csproj", "{ECE4B8E2-184B-4C71-9ABD-38C77F59385D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DeviceMonitor", "DeviceMonitor\DeviceMonitor.csproj", "{A12681C1-F71C-44A5-8E9D-5031AEB73D6E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{ECE4B8E2-184B-4C71-9ABD-38C77F59385D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ECE4B8E2-184B-4C71-9ABD-38C77F59385D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ECE4B8E2-184B-4C71-9ABD-38C77F59385D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ECE4B8E2-184B-4C71-9ABD-38C77F59385D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A12681C1-F71C-44A5-8E9D-5031AEB73D6E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A12681C1-F71C-44A5-8E9D-5031AEB73D6E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A12681C1-F71C-44A5-8E9D-5031AEB73D6E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A12681C1-F71C-44A5-8E9D-5031AEB73D6E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {05E644E9-7E06-4B68-AA02-72E5EC4A323D}
+	EndGlobalSection
+EndGlobal
